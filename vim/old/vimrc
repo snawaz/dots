@@ -1,0 +1,426 @@
+"let b:did_ftplugin = 1
+"set term=ansi
+
+"to enable rust-syntax on
+"https://github.com/rust-lang/rust.vim
+"https://github.com/tpope/vim-pathogen
+"http://www.vim.org/scripts/script.php?script_id=2332
+execute pathogen#infect()
+"syntax on
+"filetype plugin indent on
+"try this as well: https://failicide.wordpress.com/2014/06/14/adding-rust-syntax-highlighting-to-vim/
+"==============
+
+" function! DefaultWorkspace()
+"     " Rough num columns to decide between laptop and big monitor screens
+"     let numcol = 2
+"     if winwidth(0) >= 220
+"         let numcol = 3
+"     endif
+" 
+"     if numcol == 3
+"         e term://zsh
+"         file Shell\ Two
+"         vnew
+"     endif
+" 
+"     vsp term://~/Programs/golang/context
+"     file Context
+"     sp term://zsh
+"     file Shell\ One
+"     wincmd k
+"     resize 4
+"     wincmd h
+" endfunction
+" command! -register DefaultWorkspace call DefaultWorkspace()
+
+" Use color syntax highlighting.
+syntax on
+filetype plugin on
+colorscheme molokai
+if !has('nvim')
+    colorscheme peachpuff
+endif
+
+
+" LANGUAGE SERVER
+" https://langserver.org/
+" https://github.com/autozimu/LanguageClient-neovim/blob/next/INSTALL.md
+" https://github.com/theia-ide/typescript-language-server
+set runtimepath+=~/.vim/plugins/LanguageClient-neovim
+set signcolumn=yes
+set hidden
+hi SignColumn ctermbg=17
+
+let g:LanguageClient_serverCommands = {
+    \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
+    \ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
+    \ 'typescript': ['/nix/store/xq4g9fyy95f2ra43wisfjll5irl3yn8f-nodejs-8.15.0/bin/typescript-language-server', '--stdio'],
+    \ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
+    \ 'python': ['/usr/local/bin/pyls'],
+    \ 'ruby': ['~/.rbenv/shims/solargraph', 'stdio'],
+    \ }
+
+nnoremap C :call LanguageClient_contextMenu()<CR>
+nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> dg :tab :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> ds :vsp :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> rr :call LanguageClient#textDocument_rename()<CR>
+
+
+"https://github.com/prettier/vim-prettier
+"let g:prettier#autoformat = 0
+"autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html PrettierAsync
+"autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.html,*java PrettierAsync
+"let g:prettier#autoformat_config_present = 1
+"let g:prettier#autoformat_config_files = ["~/.prettierrc"]
+
+" Dim inactive windows using 'colorcolumn' setting
+" This tends to slow down redrawing, but is very useful.
+" Based on https://groups.google.com/d/msg/vim_use/IJU-Vk-QLJE/xz4hjPjCRBUJ
+" XXX: this will only work with lines containing text (i.e. not '~')
+" from
+" if exists('+colorcolumn')
+"   function! s:DimInactiveWindows()
+"     for i in range(1, tabpagewinnr(tabpagenr(), '$'))
+"       let l:range = ""
+"       if i != winnr()
+"         if &wrap
+"          " HACK: when wrapping lines is enabled, we use the maximum number
+"          " of columns getting highlighted. This might get calculated by
+"          " looking for the longest visible line and using a multiple of
+"          " winwidth().
+"          let l:width=256 " max
+"         else
+"          let l:width=winwidth(i)
+"         endif
+"         let l:range = join(range(1, l:width), ',')
+"       endif
+"       " call setwinvar(i, '&colorcolumn', l:range)
+"       " call setwinvar(i, '&colorscheme', 'delek')
+"       " highlight colorcolumn ctermbg=green
+"     endfor
+"   endfunction
+"   augroup DimInactiveWindows
+"     au!
+"     "au WinEnter * call s:DimInactiveWindows()
+"     au WinEnter * set cursorline
+"     au WinLeave * set nocursorline
+"   augroup END
+" endif
+
+"  hi CursorLine ctermbg=darkblue ctermfg=white
+" set cursorline
+
+" augroup BgHighlight
+"     autocmd!
+"     autocmd WinEnter * set cul
+"     autocmd WinLeave * set nocul
+" augroup END
+
+" https://github.com/altercation/vim-colors-solarized
+" https://ethanschoonover.com/solarized/
+" =====================================
+" let g:solarized_termcolors=256
+" syntax enable
+" set background=light
+" colorscheme solarized
+
+"
+"
+
+set nobackup
+set noswapfile
+set hidden
+
+" https://stackoverflow.com/questions/26214156/how-to-auto-format-json-on-save-in-vim
+com! FormatJson %!python -m json.tool
+
+let mapleader=' '
+
+let g:racer_cmd = "/Users/snawaz/.nix-profile/bin/racer"
+let g:racer_experimental_completer = 1
+let g:racer_insert_paren = 1
+
+au FileType rust nmap gd <Plug>(rust-def)
+au FileType rust nmap gs <Plug>(rust-def-split)
+au FileType rust nmap gx <Plug>(rust-def-vertical)
+au FileType rust nmap <leader>gd <Plug>(rust-doc)
+
+"https://github.com/lifepillar/pgsql.vim
+let g:sql_type_default = 'pgsql'
+
+"https://github.com/justinmk/vim-sneak
+let g:sneak#label = 1
+
+let g:rustfmt_autosave = 1
+"let g:rustfmt_command = 'rustup run stable rustfmt'
+"let g:rustfmt_command = 'cargo fmt'
+
+
+set autoread "auto refresh if file changed on disk
+
+set tabstop=4 shiftwidth=4 softtabstop=4 expandtab
+
+"https://vi.stackexchange.com/a/521/21711
+"enable mouse drag to resize split windows
+"set mouse=a
+"https://neovim.io/doc/user/nvim.html#nvim-from-vim
+if !has('nvim')
+    set ttymouse=xterm2
+endif
+
+" shows a list of matching files when tab completing in command mode, like with :tabe
+set wildmenu
+set wildmode=list:full
+set wildignore=*.swp,*.bak,*.*.pyc,*.class,*/.git/**/* " https://www.reddit.com/r/vim/comments/1p2a62/a_painless_tutorial_on_vim_buffers/ccxzq7e/
+set wildignorecase
+
+" toggle 
+set relativenumber
+noremap <leader>n :set invrelativenumber <cr>  
+
+" search intelligently : http://stevelosh.com/blog/2010/09/coming-home-to-vim/
+set ignorecase
+set smartcase
+
+" gdefault applies substitutions globally on lines: instead of :%s/foo/bar/g, just type :%s/foo/bar/
+set gdefault
+
+" save automatically on focus lost
+autocmd FocusLost * :wa
+
+" strip all trailing whitespace in the file
+nnoremap <leader>w :%s/\s\+$//<cr>:let @/=''<cr>
+
+" 'fold tag' function is used to fold matching tags in HTML like docs: http://stevelosh.com/blog/2010/09/coming-home-to-vim/
+nnoremap <leader>ft Vatzf
+
+" open .vimrc in a vertical split 
+nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr><C-w><C-w>
+
+map <leader>s :wq<cr>
+
+
+" move around easily with split windows:  http://stevelosh.com/blog/2010/09/coming-home-to-vim/
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+"http://stackoverflow.com/questions/4206360/vim-how-to-change-font-color-of-current-line-number
+highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=Black guibg=#589A5D
+
+"----------------------------
+
+" Color specifications. Change them as you would like.
+
+"hi Comment	term=none	ctermfg=blue	guifg=blue
+"hi Constant	term=underline	ctermfg=red	guifg=Cyan
+"hi Identifier	term=underline	ctermfg=white	guifg=White
+"hi Statement	term=bold	ctermfg=white	guifg=White
+"hi PreProc	term=underline	ctermfg=magenta	guifg=Magenta
+"hi Type		term=underline	ctermfg=green	guifg=White
+"hi Special	term=bold	ctermfg=blue	guifg=Blue
+"hi Nontext	term=bold	ctermfg=yellow	guifg=Red
+"hi Normal	guifg=Yellow	guibg=#00007F
+"hi Normal	ctermfg=white
+
+"hi Comment      cterm=none	gui=none
+"hi Constant     cterm=bold	gui=none
+"hi Identifier   cterm=none	gui=none
+"hi Statement    cterm=bold	gui=none
+"hi PreProc      cterm=bold	gui=none
+"hi Type         cterm=bold	gui=none
+"hi Special      cterm=bold	gui=none
+"hi NonText	cterm=bold	gui=none
+
+" Special highlighting for XML
+"hi xmlTag ctermfg=blue cterm=bold guifg=white
+"hi xmlTagName ctermfg=blue cterm=bold guifg=white
+"hi xmlEndTag ctermfg=blue cterm=bold guifg=white
+
+
+
+
+"noremap <F11> gT
+"noremap <F12> gt
+
+noremap < gT
+noremap > gt
+
+" https://github.com/vim/vim/issues/704
+autocmd VimEnter * set autochdir
+
+" search smartly.. and easily: http://stevelosh.com/blog/2010/09/coming-home-to-vim/
+set hlsearch                    " highlight search terms
+set incsearch                   " show search matches as you type
+set showmatch		" Show parentheses matching
+noremap <leader><space> :noh<cr>
+
+" make the tab key match bracket pairs; <tab> is a hell of a lot easier to type than %
+" http://stevelosh.com/blog/2010/09/coming-home-to-vim/
+nnoremap <tab> %
+vnoremap <tab> %
+
+set autochdir
+set tabstop=4
+set nu
+set autoindent
+set backspace=2		" Allows insert-mode backspace to work as one expects
+set cindent
+set cinkeys=0{,0},:,!^F,o,O,e	" See "cinkeys"; this stops "#" from indenting
+set fileformat=unix	" No crazy CR/LF
+set listchars=tab:\ \ ,trail:· " If you do ":set list", shows trailing spaces
+set nobackup		" Don't use a backup file (also see writebackup)
+set nojoinspaces	" One space after a "." rather than 2
+set ruler		" Show the line position at the bottom of the window
+set scrolloff=1		" Minimum lines between cursor and window edge
+set shiftwidth=4	" Indent by 4 columns (for C functions, etc).
+set showcmd		" Show partially typed commands
+set smartindent		" Indent settings (really only the cindent matters)
+set textwidth=180	" Maximum line width
+"set viminfo='0,\"100,	" Stay at the start of a file when opening it
+set whichwrap=<,>,[,],h,l " Allows for left/right keys to wrap across lines
+set writebackup		" Write temporary backup files in case we crash
+
+"if version >= 600
+"
+"" Vim 6 options
+"
+""  colo cduan
+"  set formatoptions=tcroql
+"
+"  " Increase the highlighting accuracy
+"  syn sync fromstart
+"
+"else
+"
+"  set fo=tcroql
+""  source ~/.vim/colors/cduan.vim
+""  source ~/.vim/plugin/matchit.vim
+"   syn sync minlines=1000
+"
+"end
+"
+"set guifont=-Schumacher-Clean-Medium-R-Normal--16-160-75-75-C-80-ISO646.1991-IRV
+"
+""map <Del> <BS>
+""imap <Del> <BS>
+"
+"" My file types. TODO: These should be in the .vimft file, I think...
+"au BufNewFile,BufRead *.cls set syn=tex
+"au BufNewFile,BufRead *.R set syn=r
+"au BufNewFile,BufRead *.R syn sync fromstart
+"
+"" On plain text files, no keyword chars, because we don't want tab completion
+"au BufNewFile,BufRead *.txt set iskeyword=
+"
+"" NOTE: Sweave syntax is my own file...
+"au BufNewFile,BufRead *.Snw set syn=sweave
+"
+"" On LaTeX files don't use indenting.
+"au BufNewFile,BufRead *.tex,*.Snw set noautoindent nosmartindent nocindent
+"" On HTML files don't use indenting.
+"au BufNewFile,BufRead *.html set noautoindent nosmartindent nocindent
+"
+"" On CGI files, determine type by reading in a line.
+"fun! CGICheck()
+"    let l = getline(nextnonblank(1))
+"    if l =~ 'php'
+"	set syn=php
+"    elseif l =~ 'perl'
+"	set syn=perl
+"    endif
+"endfun
+"
+"au BufRead *.cgi	call CGICheck()
+"
+"" On reading TeX files, don't wrap to eighty characters. I know this is
+"" horrible, but it makes formatting and parsing much easier for me.
+"" TODO Figure out how to make the scrolling work properly with line wrapping.
+"fun! TeXformat()
+"    set noautoindent nosmartindent nocindent
+"    set textwidth=0
+"    set linebreak
+"    set display=lastline
+"    noremap j gj
+"    noremap k gk
+"    noremap $ g$
+"    noremap ^ g^
+"    noremap 0 g0
+"    noremap A g$a
+"    noremap I g^i
+"    noremap C cg$
+"    noremap D dg$
+"endfun
+"
+""au BufNewFile,BufRead *.tex call TeXformat()
+"
+"" Set expandtab for Fortran files
+"au BufNewFile,BufRead *.f,*.for set expandtab
+"
+"" I don't know why I need this...
+"augroup cprog
+"    au!
+"augroup end
+"
+"" Based on VIM tip 102: automatic tab completion of keywords
+"function InsertTabWrapper(dir)
+"    let col = col('.') - 1
+"    if !col || getline('.')[col - 1] !~ '\k'
+"	return "\<tab>"
+"    elseif "back" == a:dir
+"	return "\<c-p>"
+"    else
+"	return "\<c-n>"
+"    endif
+"endfunction
+"
+"if has("autocmd")
+"	"When editing a file, jump to the last cursor position
+"	au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+"endif
+
+"inoremap <tab> <c-r>=InsertTabWrapper("fwd")<cr>
+"inoremap <s-tab> <c-r>=InsertTabWrapper("back")<cr>
+
+noremap <F11> gT
+noremap <F12> gt
+
+noremap <F1> 1gt
+noremap <F2> 2gt
+noremap <F3> 3gt
+noremap <F4> 4gt
+noremap <F5> 5gt
+noremap <F6> 6gt
+noremap <F7> 7gt
+noremap <F8> 8gt
+noremap <F9> 9gt
+
+set encoding=utf-8
+
+"noremap / /\v
+
+"autocmd StdinReadPre * let s:std_in=1
+"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+"autocmd VimEnter *  NERDTree
+nnoremap <Leader>f :NERDTreeToggle<Enter>
+"nnoremap <silent> <Leader>v :NERDTreeFind<CR>
+"let NERDTree
+"let NERDTreeMapOpenInTab='<ENTER>'
+let NERDTreeIgnore=['\~$', 'target', '\.l', '_bk']
+let NERDTreeShowLineNumbers=1 " enable line numbers
+autocmd FileType nerdtree setlocal relativenumber " make sure relative line numbers are used
+
+" let g:netrw_banner = 0
+" let g:netrw_liststyle = 3
+" let g:netrw_browse_split = 4
+" let g:netrw_altv = 1
+" let g:netrw_winsize = 18
+" augroup ProjectDrawer
+"   autocmd!
+"   autocmd VimEnter * :Vexplore
+" augroup END

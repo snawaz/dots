@@ -1,0 +1,36 @@
+#!/bin/bash
+
+set -oeu pipefail
+
+print_help() {
+    echo -e "\nUsage:\n\t$ use-vim [ old | new ]"
+    echo -e "\n"
+}
+
+if [ $# -lt 1 ]; then
+    print_help;
+    exit 1;
+fi
+
+for arg in "$@"
+do
+    case $arg in
+        old)
+            echo -e "Use the settings from ~/dots/vim/old"
+	        cd ~ && ln -sfn ~/dots/vim/old/vim .vim
+	        cd ~ && ln -sfn ~/dots/vim/old/vimrc .vimrc
+	        cd ~ && ln -sfn ~/dots/vim/old/viminfo .viminfo
+        ;;
+        new)
+            echo -e "Use the settings from ~/dots/vim/new"
+            cd ~ && ln -sfn ~/dots/vim/new/vim .vim
+	        cd ~ && ln -sfn ~/dots/vim/new/vimrc .vimrc
+	        cd ~ && ln -sfn ~/dots/vim/new/viminfo .viminfo
+        ;;
+        *)
+            echo -e "\033[31mUnknown argument: $arg\033[0m";
+            print_help;
+            exit 2;
+        ;;
+    esac
+done
