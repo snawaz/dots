@@ -25,7 +25,7 @@ Key Mappings
 
 - `' '` is defined to be `<leader>`
 - Navigations/Splits/Tabs
-  - `<C-h>`, `<C-j>`, <C-k>` and `<C-l>` to switch between splits, conforming to the `hjkl` standard directions
+  - `<C-h>`, `<C-j>`, `<C-k>` and `<C-l>` to switch between splits, conforming to the `hjkl` standard directions
   - `>` and `<` to switch between tabs
   - `<C-z>` and `<C-x>` to resize vertical splits
 - Edit
