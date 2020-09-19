@@ -4,25 +4,54 @@
 syntax on
 filetype plugin on
 
+let g:coc_disable_startup_warning = 1
+
+"https://github.com/JuliaEditorSupport/julia-vim
+let g:latex_to_unicode_tab=0 " disable it as it does not work, and causing issue in tab
+
 let mapleader=' '
 
-source ~/.vim/set-cmds.vim
+" https://github.com/vim/vim/issues/704
+autocmd VimEnter * set autochdir
+
+source ~/.vim/set-options.vim
 
 source ~/.vim/plugins.vim
 
-source ~/.vim/plugin-settings/fzf.vim
-source ~/.vim/plugin-settings/language-client.vim
-source ~/.vim/plugin-settings/lightline.vim
-source ~/.vim/plugin-settings/nerdtree.vim
-source ~/.vim/plugin-settings/pgsql.vim
-source ~/.vim/plugin-settings/racer.vim
-source ~/.vim/plugin-settings/undotree.vim
-source ~/.vim/plugin-settings/vim-sneak.vim
+source ~/.vim/configs/coc.vim
+source ~/.vim/configs/fzf.vim
+"source ~/.vim/configs/language-client.vim
+source ~/.vim/configs/lightline.vim
+source ~/.vim/configs/nerdtree.vim
+source ~/.vim/configs/pgsql.vim
+source ~/.vim/configs/racer.vim
+source ~/.vim/configs/undotree.vim
+source ~/.vim/configs/vim-sneak.vim
+source ~/.vim/configs/tabular.vim
+source ~/.vim/configs/vim-commentary.vim
+source ~/.vim/configs/haskell-vim.vim
 
 source ~/.vim/mappings.vim
 
 "colorscheme molokai
 colorscheme idan
+
+" setting color of the floating window
+" it should be done after the colorscheme as colorscheme might clear all colors
+" consider adding this to idan colorscheme
+" https://github.com/neoclide/coc.nvim/wiki/F.A.Q#bad-background-highlight-of-floating-window
+" see also : https://github.com/neovim/neovim/issues/9718
+hi CocFloating  ctermbg=17  ctermfg=15
+hi NormalFloat  ctermbg=17  ctermfg=15
+
+" highlight item under curser
+"hi CocHighlightText     ctermbg=118  ctermfg=0
+hi CocHighlightText                ctermfg=10 ctermbg=0
+
+" supports for haskell and few other languages
+" > https://github.com/rakr/vim-one
+"colorscheme one
+"set background=dark
 
 " have vim jump to the last position when reopening a file
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
@@ -30,10 +59,6 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 "http://stackoverflow.com/questions/4206360/vim-how-to-change-font-color-of-current-line-number
 highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=233
 
-" format json file 
+" format json file
 " https://stackoverflow.com/questions/26214156/how-to-auto-format-json-on-save-in-vim
-com! FormatJson %!python -m json.tool
-
-" https://github.com/vim/vim/issues/704
-autocmd VimEnter * set autochdir
-
+command! FormatJson %!python -m json.tool

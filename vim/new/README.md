@@ -34,9 +34,9 @@ Key Mappings
     - Likewise, `OO` to insert line before the current one
 - `<leader>` followed by:
   - `w` to remove trailing whitespace
-  - `n` to toggle relativenumber
+  - `r` to toggle relativenumber
   - `s` to `:wq`
-  - `<space>` to no highlights
+  - `n` to no highlights
   - `<tab>` to jump to matching parens, etc (works in both `normal` and `visual` mode).
   - `ev` to open `.vimrc` in vertical split
 - Plugin specifics
@@ -44,9 +44,26 @@ Key Mappings
     - `<C-p>` to search files tracked by git
     - `<C-b>` to search buffers
     - `<C-f>` to search history
-    - `<C-s>` to search lines in buffers
+    - `<leader><leader>` to search lines in buffers
+    - `<C-t>` to open file in tab ([default][fzf.vim])
+    - `<C-v>` to open file in vertical split (default)
+    - `<C-x>` to open file in horizontal split (default)
   - NerdTree
     - `<leader>f` to open/close nerdtree split
   - UndoTree
     - `<leader>u` to open undo tree
+
+
+[fzf.vim]: https://github.com/junegunn/fzf.vim
+
+Default Keys Mappings
+=====================
+
+The default keys that I care about and use, and thus must not be remapped to
+anything else map.
+
+-
+-
+-
+
 
