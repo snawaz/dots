@@ -6,8 +6,17 @@ filetype plugin on
 
 let g:coc_disable_startup_warning = 1
 
+        " ,
+        "  "golang": {
+        "    "command": "gopls",
+        "    "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
+        "    "filetypes": ["go"]
+        " }
 "https://github.com/JuliaEditorSupport/julia-vim
 let g:latex_to_unicode_tab=0 " disable it as it does not work, and causing issue in tab
+
+let g:go_def_mode='gopls'
+let g:go_info_mode='gopls'
 
 let mapleader=' '
 
@@ -17,6 +26,9 @@ autocmd VimEnter * set autochdir
 source ~/.vim/set-options.vim
 
 source ~/.vim/plugins.vim
+
+" https://dev.to/jogendra/using-vim-for-go-development-5hc6
+" au filetype go inoremap <buffer> . .<C-x><C-o>
 
 source ~/.vim/configs/coc.vim
 source ~/.vim/configs/fzf.vim
@@ -41,12 +53,12 @@ colorscheme idan
 " consider adding this to idan colorscheme
 " https://github.com/neoclide/coc.nvim/wiki/F.A.Q#bad-background-highlight-of-floating-window
 " see also : https://github.com/neovim/neovim/issues/9718
-hi CocFloating  ctermbg=17  ctermfg=15
+"hi CocFloating  ctermbg=17  ctermfg=15
 hi NormalFloat  ctermbg=17  ctermfg=15
 
 " highlight item under curser
 "hi CocHighlightText     ctermbg=118  ctermfg=0
-hi CocHighlightText                ctermfg=10 ctermbg=0
+" hi CocHighlightText                ctermfg=10 ctermbg=0
 
 " supports for haskell and few other languages
 " > https://github.com/rakr/vim-one

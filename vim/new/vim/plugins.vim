@@ -59,6 +59,9 @@ call plug#begin('~/.vim/plugged')
     Plug 'neovimhaskell/haskell-vim', { 'for': 'haskell' }        " Haskell
     Plug 'JuliaEditorSupport/julia-vim', { 'for': 'julia' }       " Julia
     Plug 'zah/nim.vim', { 'for' : 'nim'}
+    Plug 'tomlion/vim-solidity', { 'for' : 'solidity' }
+    Plug 'fatih/vim-go', { 'for' : 'go', 'do': 'GoUpdateBinaries' }
+
     " Color schemes
     Plug 'fatih/molokai'
     Plug 'rakr/vim-one'

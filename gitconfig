@@ -1,0 +1,26 @@
+[user]
+	name = Sarfaraz Nawaz
+	email = sarfaraz.nawaz@tenx.tech
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[grep]
+	lineNumber = true
+	patternType = perl
+[core]
+	excludesfile = /Users/snawaz/.gitignore
+	pager = cat
+[alias]
+    ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
+    ld = log --pretty=format:"%C(yellow)%h\\ %C(green)%ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short --graph
+    ls = log --pretty=format:"%C(green)%h\\ %C(yellow)[%ad]%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=relative
+[color]
+    status = always
+[credential]
+	helper = cache
+[github]
+	user = snawaz
+[rebase]
+	autoSquash = true
