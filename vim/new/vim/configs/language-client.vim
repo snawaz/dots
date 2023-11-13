@@ -4,9 +4,9 @@
 " > https://langserver.org/
 " > https://github.com/autozimu/LanguageClient-neovim/blob/next/INSTALL.md
 " > https://github.com/theia-ide/typescript-language-server
+"  \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
 
 let g:LanguageClient_serverCommands = {
-    \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
     \ 'haskell': ['hie-wrapper', '--lsp'],
     \ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
     \ 'typescript': ['/nix/store/xq4g9fyy95f2ra43wisfjll5irl3yn8f-nodejs-8.15.0/bin/typescript-language-server', '--stdio'],

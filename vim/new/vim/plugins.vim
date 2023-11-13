@@ -48,7 +48,7 @@ call plug#begin('~/.vim/plugged')
     " Plug 'liuchengxu/vim-clap' # requires higher vim version. try :echo has('patch-8.1.2114').
 
     " Languages syntax coloring
-    Plug 'rust-lang/rust.vim', { 'for': 'rust' }                  " Rust
+    Plug 'rust-lang/rust.vim'                   " , { 'for': 'rust' }                   Rust
     Plug 'lifepillar/pgsql.vim', { 'for': 'sql' }                 " PSQL
     Plug 'dag/vim-fish', { 'for': 'fish' }                        " Fish
     Plug 'cespare/vim-toml', { 'for': 'toml' }                    " Toml
@@ -61,6 +61,9 @@ call plug#begin('~/.vim/plugged')
     Plug 'zah/nim.vim', { 'for' : 'nim'}
     Plug 'tomlion/vim-solidity', { 'for' : 'solidity' }
     Plug 'fatih/vim-go', { 'for' : 'go', 'do': 'GoUpdateBinaries' }
+    Plug 'ziglang/zig.vim'
+    Plug 'udalov/kotlin-vim'
+    Plug 'vim-erlang/vim-erlang-runtime'
 
     " Color schemes
     Plug 'fatih/molokai'

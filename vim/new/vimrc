@@ -20,10 +20,10 @@ let g:go_info_mode='gopls'
 
 let mapleader=' '
 
+source ~/.vim/set-options.vim
+
 " https://github.com/vim/vim/issues/704
 autocmd VimEnter * set autochdir
-
-source ~/.vim/set-options.vim
 
 source ~/.vim/plugins.vim
 
@@ -53,8 +53,15 @@ colorscheme idan
 " consider adding this to idan colorscheme
 " https://github.com/neoclide/coc.nvim/wiki/F.A.Q#bad-background-highlight-of-floating-window
 " see also : https://github.com/neovim/neovim/issues/9718
-"hi CocFloating  ctermbg=17  ctermfg=15
-hi NormalFloat  ctermbg=17  ctermfg=15
+"hi NormalFloat  ctermbg=17  ctermfg=15
+"hi CocFloating  ctermbg=18  ctermfg=15
+"hi FloatBorder  ctermbg=224 ctermfg=224
+"highlight FloatBorder guifg=#021316
+
+"au ColorScheme * hi! link CocMenuSel PmenuSel
+"au ColorScheme * hi! link CocPumMenu Pmenu
+hi! link CocMenuSel PmenuSel
+hi! link CocPumMenu Pmenu
 
 " highlight item under curser
 "hi CocHighlightText     ctermbg=118  ctermfg=0

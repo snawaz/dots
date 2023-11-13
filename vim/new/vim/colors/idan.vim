@@ -67,9 +67,9 @@ hi MoreMsg         guifg=#E6DB74
 hi Operator        guifg=#F92672
 
 " complete menu
-hi Pmenu           guifg=#66D9EF guibg=#000000
-hi PmenuSel                      guibg=#808080
-hi PmenuSbar                     guibg=#080808
+hi Pmenu           guifg=#66D9EF guibg=#F00000
+hi PmenuSel                      guibg=#FF8080
+hi PmenuSbar                     guibg=#FF0808
 hi PmenuThumb      guifg=#66D9EF
 
 hi PreCondit       guifg=#A6E22E               gui=bold
@@ -183,10 +183,12 @@ if &t_Co > 255
    hi MoreMsg         ctermfg=229
    hi Operator        ctermfg=226
 
+   " hi NormalFloat     ctermbg=17  ctermfg=15
+   
    " complete menu
-   hi Pmenu           ctermfg=81  ctermbg=16
-   hi PmenuSel        ctermfg=255 ctermbg=242
-   hi PmenuSbar                   ctermbg=232
+   hi Pmenu           ctermfg=81  ctermbg=232
+   hi PmenuSel        ctermfg=15  ctermbg=22
+   hi PmenuSbar                   ctermbg=17
    hi PmenuThumb      ctermfg=81
 
    hi PreCondit       ctermfg=118               cterm=bold

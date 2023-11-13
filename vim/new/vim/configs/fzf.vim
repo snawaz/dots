@@ -38,6 +38,7 @@ if has('nvim')
     let buf = nvim_create_buf(v:false, v:true)
     call setbufvar(buf, '&signcolumn', 'no')
     let win = nvim_open_win(buf, v:true, opts)
+    " silent! call setwinvar(win, '&winhighlight', 'Pmenu:Pmenu,PmenuSel:PmenuSel')
   endfunction
 endif
 
